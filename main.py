@@ -66,7 +66,7 @@ class Detector:
                             metrics=['accuracy'])
     
     def train_model(self):
-        self.emotion_model_info = self.emotion_model.fit_generator( 
+        self.emotion_model_info = self.emotion_model.fit( 
         self.train_generator, 
         steps_per_epoch=28709 // 64, 
         epochs=30, 
