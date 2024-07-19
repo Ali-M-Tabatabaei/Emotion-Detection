@@ -30,7 +30,7 @@ class Detector:
         class_mode='categorical')
         self.emotion_model = None
         self.emotion_model_info = None
-        self.emotion_dict = emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful",  
+        self.emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful",  
                 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"} 
     
     def model_creation(self):
@@ -104,8 +104,13 @@ class Detector:
         model_json = self.emotion_model.to_json() 
         with open("emotion_model.json", "w") as json_file: 
             json_file.write(model_json) 
-        
     
+    def load_model(self):
+        json_file = open('emotion_model_secondary.json', 'r') 
+        loaded_model_json = json_file.read() 
+        json_file.close() 
+        self.emotion_model = model_from_json(loaded_model_json) 
+        
     def validation(self):
         cap = cv2.VideoCapture(0) 
         while True: 
@@ -148,8 +153,9 @@ class Detector:
         
 if __name__ == "__main__":
         detector = Detector("./archive/train", "./archive/test")
-        detector.model_creation()
-        detector.train_model()
-        detector.visualization()
-        detector.save_model()
+        # detector.model_creation()
+        # detector.train_model()
+        # detector.visualization()
+        # detector.save_model()
+        detector.load_model()
         detector.validation()
